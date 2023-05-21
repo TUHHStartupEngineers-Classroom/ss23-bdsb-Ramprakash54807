@@ -4,7 +4,7 @@
     "href": "content/01_journal/01_tidyverse.html",
     "title": "MyLabJournal",
     "section": "",
-    "text": "require(tidyverse) library(readxl)"
+    "text": "require(tidyverse) library(readxl) library(conflicted) library(tibble) library(readr) library(dplyr) library(magrittr) library(tidyr)\nlibrary(stringr) library(ggplot2)\nconflicts_prefer(magrittr::set_names)"
   },
   {
     "objectID": "content/01_journal/01_tidyverse.html#sales-by-year--",
