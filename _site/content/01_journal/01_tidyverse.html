@@ -145,6 +145,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sales-by-year--" id="toc-sales-by-year--" class="nav-link" data-scroll-target="#sales-by-year--"><span class="toc-section-number">6.1</span>  6.1 Sales by Year —-</a></li>
   <li><a href="#sales-by-year-and-category--" id="toc-sales-by-year-and-category--" class="nav-link" data-scroll-target="#sales-by-year-and-category--"><span class="toc-section-number">6.2</span>  6.2 Sales by Year and Category —-</a></li>
   </ul></li>
+  <li><a href="#writing-files--" id="toc-writing-files--" class="nav-link" data-scroll-target="#writing-files--"><span class="toc-section-number">7</span>  7.0 Writing Files —-</a></li>
   </ul>
 </nav>
     </div>
@@ -228,10 +229,16 @@ ul.task-list li input[type="checkbox"] {
 <p>#### Geometries geom_col() + # Run up to here to get a stacked bar plot</p>
 <p>#### Facet facet_wrap(~ category_1) +</p>
 <p>#### Formatting scale_y_continuous(labels = scales::dollar_format(big.mark = “.”, decimal.mark = “,”, prefix = ““, suffix =” €“)) + labs( title =”Revenue by year and main category”, subtitle = “Each product category has an upward trend”, fill = “Main category” # Changes the legend name )</p>
-
-
 </section>
 </section>
+</section>
+<section id="writing-files--" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 7.0 Writing Files —-</h1>
+<p># 7.1 Excel —- install.packages(“writexl”) library(“writexl”) bike_orderlines_wrangled_tbl %&gt;% write_xlsx(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx”)</p>
+<p># 7.2 CSV —- bike_orderlines_wrangled_tbl %&gt;% write_csv(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.csv”)</p>
+<p># 7.3 RDS —- bike_orderlines_wrangled_tbl %&gt;% write_rds(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.rds”)</p>
+
+
 </section>
 
 </main> <!-- /main -->
