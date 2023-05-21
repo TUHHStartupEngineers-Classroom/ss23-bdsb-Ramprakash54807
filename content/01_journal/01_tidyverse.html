@@ -146,6 +146,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sales-by-year-and-category--" id="toc-sales-by-year-and-category--" class="nav-link" data-scroll-target="#sales-by-year-and-category--"><span class="toc-section-number">6.2</span>  6.2 Sales by Year and Category —-</a></li>
   </ul></li>
   <li><a href="#writing-files--" id="toc-writing-files--" class="nav-link" data-scroll-target="#writing-files--"><span class="toc-section-number">7</span>  7.0 Writing Files —-</a></li>
+  <li><a href="#assignment-task" id="toc-assignment-task" class="nav-link" data-scroll-target="#assignment-task"><span class="toc-section-number">8</span>  8.0 Assignment task</a></li>
   </ul>
 </nav>
     </div>
@@ -156,7 +157,9 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="load-libraries--" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 1.0 Load libraries —-</h1>
-<p>require(tidyverse) library(readxl)</p>
+<p>require(tidyverse) library(readxl) library(conflicted) library(tibble) library(readr) library(dplyr) library(magrittr) library(tidyr)<br>
+library(stringr) library(ggplot2)</p>
+<p>conflicts_prefer(magrittr::set_names)</p>
 </section>
 <section id="importing-files--" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> 2.0 Importing Files —-</h1>
@@ -237,6 +240,15 @@ ul.task-list li input[type="checkbox"] {
 <p># 7.1 Excel —- install.packages(“writexl”) library(“writexl”) bike_orderlines_wrangled_tbl %&gt;% write_xlsx(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx”)</p>
 <p># 7.2 CSV —- bike_orderlines_wrangled_tbl %&gt;% write_csv(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.csv”)</p>
 <p># 7.3 RDS —- bike_orderlines_wrangled_tbl %&gt;% write_rds(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.rds”)</p>
+</section>
+<section id="assignment-task" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> 8.0 Assignment task</h1>
+<p>bike_orderlines_wrangled_tbl_new &lt;- read_excel(“00_Data/01_raw_data/DS Data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx”)</p>
+<p>bike_orderlines_wrangled_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;% separate(location, into = c(“city”, “state”), sep = “,”, remove = FALSE)</p>
+<p>sales_by_loc_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;% group_by(state) %&gt;% summarize(total_revenue = sum(total_price))</p>
+<p>ggplot(sales_by_loc_tbl_new, aes(x = state, y = total_revenue)) + geom_bar(stat = “identity”, fill = “steelblue”) + labs(title = “Total Revenue by State”, x = “State”, y = “Total Revenue”) + theme(axis.text.x = element_text(angle = 45, hjust = 1))</p>
+<p>sales_by_loc_year_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;% group_by(state, model_year) %&gt;% summarize(total_revenue = sum(total_price))</p>
+<p>ggplot(sales_by_loc_year_tbl_new, aes(x = model_year, y = total_revenue)) + geom_bar(stat = “identity”, fill = “steelblue”) + labs(title = “Total Revenue by State and Year”, x = “Year”, y = “Total Revenue”) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~state, scales = “free_x”, ncol = 4)</p>
 
 
 </section>
