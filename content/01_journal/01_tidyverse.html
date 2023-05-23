@@ -43,6 +43,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -249,6 +252,12 @@ library(stringr) library(ggplot2)</p>
 <p>ggplot(sales_by_loc_tbl_new, aes(x = state, y = total_revenue)) + geom_bar(stat = “identity”, fill = “steelblue”) + labs(title = “Total Revenue by State”, x = “State”, y = “Total Revenue”) + theme(axis.text.x = element_text(angle = 45, hjust = 1))</p>
 <p>sales_by_loc_year_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;% group_by(state, model_year) %&gt;% summarize(total_revenue = sum(total_price))</p>
 <p>ggplot(sales_by_loc_year_tbl_new, aes(x = model_year, y = total_revenue)) + geom_bar(stat = “identity”, fill = “steelblue”) + labs(title = “Total Revenue by State and Year”, x = “Year”, y = “Total Revenue”) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~state, scales = “free_x”, ncol = 4)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="Tidyverse Visual.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Visual"><img src="Tidyverse Visual.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Visual</figcaption><p></p>
+</figure>
+</div>
 
 
 </section>
@@ -503,6 +512,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":true});</script>
 
 
 
