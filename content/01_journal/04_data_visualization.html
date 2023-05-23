@@ -8,7 +8,7 @@
 
 <meta name="author" content="Joschka Schwarz">
 
-<title>MyLabJournal - Data Visualization</title>
+<title>MyLabJournal – data_visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,49 +131,41 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link active" data-scroll-target="#data-visualization"><span class="toc-section-number">1</span>  Data Visualization</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Data Visualization</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Joschka Schwarz </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
-</div>
-</div>
+<section id="data-visualization" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Data Visualization</h1>
+<section id="map-the-time-course-of-the-cumulative-covid-19-cases" class="level3">
+<h3 class="anchored" data-anchor-id="map-the-time-course-of-the-cumulative-covid-19-cases">Map the time course of the cumulative Covid-19 cases</h3>
+<p>library(tidyverse) library(dplyr) library(lubridate) library(ggplot2) library(scales) covid_data_tbl &lt;- read_csv(“https://opendata.ecdc.europa.eu/covid19/casedistribution/csv”) covid_data_tbl &lt;- covid_data_tbl[order(as.Date(covid_data_tbl$dateRep, format=“%d/%m/%Y”)),]</p>
+<p>covid_data_tbl2 &lt;- covid_data_tbl %&gt;% filter(countriesAndTerritories %in% c(‘Spain’, ‘United_Kingdom’, ‘France’, ‘Germany’,‘United_States_of_America’)) %&gt;% select(dateRep, countriesAndTerritories, cases) %&gt;% group_by(countriesAndTerritories) %&gt;% mutate(cumulativeCases = cumsum(cases)) %&gt;% select(dateRep, countriesAndTerritories, cumulativeCases) %&gt;% rename(countries = countriesAndTerritories) # Plotting the values ticks = c(“Dec”,“Jan”, ‘Feb’,‘March’, ‘April’, ‘May’, ‘June’,‘July’, ‘Aug’,‘Sept’,‘Oct’,‘Nov’,‘Dec’) y_ticks = seq(0,max(covid_data_tbl2$cumulativeCases),1250000) covid_data_tbl2 %&gt;% ggplot(aes(x = as.POSIXct(dateRep, format = ‘%d/%m/%Y’), y = cumulativeCases)) + geom_line(aes(color = countries), size = 1) + labs(x = ‘Year 2020’, y=‘Cumulative Cases’, fill = ‘Countries’) + scale_x_datetime(date_breaks = ‘month’, labels = label_date_short()) + scale_y_continuous(breaks = c(y_ticks))</p>
+</section>
+<section id="visualize-the-distribution-of-the-mortality-rate-deaths-population" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-the-distribution-of-the-mortality-rate-deaths-population">Visualize the distribution of the mortality rate (deaths / population)</h3>
+<p>library(tidyverse) library(dplyr) library(lubridate) library(ggplot2) theme_set( theme_dark() ) covid_data_tbl &lt;- read_csv(“https://opendata.ecdc.europa.eu/covid19/casedistribution/csv”)</p>
+<p>world &lt;- map_data(‘world’) %&gt;% rename(countries = region) %&gt;% dplyr::select(countries,long,lat,group)</p>
+<p>covid_data_tbl &lt;- covid_data_tbl %&gt;% mutate(across(countriesAndTerritories, str_replace_all, “_“,” “)) %&gt;% mutate(countriesAndTerritories = case_when(</p>
+<pre><code>countriesAndTerritories == "United Kingdom" ~ "UK",
+countriesAndTerritories == "United States of America" ~ "USA",
+countriesAndTerritories == "Czechia" ~ "Czech Republic",
+TRUE ~ countriesAndTerritories</code></pre>
+<p>)) population &lt;- covid_data_tbl %&gt;% group_by(countriesAndTerritories) %&gt;% dplyr::select(countriesAndTerritories, popData2019) %&gt;% unique() %&gt;% rename(countries = countriesAndTerritories)</p>
+<p>mortality_rate_tbl &lt;- covid_data_tbl %&gt;% group_by(countriesAndTerritories) %&gt;% summarise( total_deaths = sum(deaths) ) %&gt;% rename(countries = countriesAndTerritories) useful_map &lt;- left_join(population,mortality_rate_tbl, by = “countries”) final_tbl &lt;- left_join(world, useful_map, by = ‘countries’) %&gt;% mutate(mort_rate = total_deaths / popData2019) #plotting the values ggplot(final_tbl, aes(long, lat, group = group))+ geom_polygon(aes(fill = mort_rate), color = “white”)+ scale_fill_gradient(low = ‘orange’, high = ‘red’, na.value = ‘white’)</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
