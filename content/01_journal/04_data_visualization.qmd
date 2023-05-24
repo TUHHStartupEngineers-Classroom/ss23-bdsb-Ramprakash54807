@@ -2,7 +2,7 @@
 
 ### Map the time course of the cumulative Covid-19 cases
 
-
+```{r, echo = TRUE}
 library(tidyverse)
 library(dplyr)
 library(lubridate)
@@ -28,10 +28,10 @@ covid_data_tbl2 %>%
   labs(x = 'Year 2020', y='Cumulative Cases', fill = 'Countries') +
   scale_x_datetime(date_breaks = 'month', labels = label_date_short()) +
   scale_y_continuous(breaks = c(y_ticks))
-
+```
 ### Visualize the distribution of the mortality rate (deaths / population)
 
-
+```{r, echo = TRUE}
 library(tidyverse)
 library(dplyr)
 library(lubridate)
@@ -74,3 +74,5 @@ final_tbl <- left_join(world, useful_map, by = 'countries') %>%
 ggplot(final_tbl, aes(long, lat, group = group))+
   geom_polygon(aes(fill = mort_rate), color = "white")+
   scale_fill_gradient(low = 'orange', high = 'red', na.value = 'white')
+
+```
